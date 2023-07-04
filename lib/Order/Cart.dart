@@ -39,7 +39,6 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     Cartnotifire cart = Provider.of<Cartnotifire>(context);
     ProductNotifire product = Provider.of<ProductNotifire>(context);
-    // EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
     EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
     return Scaffold(
       body: Column(
@@ -180,7 +179,6 @@ class _CartState extends State<Cart> {
                     ),
                     onPressed: () {
                       _Dialog(cart);
-                      print('$emp.CurrentEmployee_loco!.id');
                     },
                     child: const Text(
                       'ເພີ່ມທີ່ຢູ່',

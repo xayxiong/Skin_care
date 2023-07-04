@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_care/eclement/element.dart';
 
-
 import '../notifire/employeeNotifire.dart';
 
 class Profile extends StatefulWidget {
@@ -15,7 +14,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    
     EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
     return Scaffold(
         appBar: AppBar(
