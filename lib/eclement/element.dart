@@ -13,8 +13,8 @@ class element {
 
   static String nullimage = 'https://rae.mju.ac.th/images/untitled.png';
   //color
-  static var main = const Color(0xff179F84);
-  static var Indigo = const Color(0xff281E5D);
+  static var main = Color.fromARGB(255, 139, 3, 98);
+  static var Indigo = Color.fromARGB(255, 30, 93, 82);
   static var ocean = const Color(0xff016064);
   static var sky = const Color(0xff63c5da);
   static var wht = const Color(0xffFAFAFA);
@@ -24,8 +24,8 @@ class element {
   //title
   static String title = 'ຮ້ານຂາຍເຄື່ອງສຳອາງອອນລາຍ';
   static String p1 = "ລາຍການສິນຄ້າ";
-  static String p2 = "ຈັດການອໍເດີ";
-  static String p3 = "ອໍເດີທີສຳເລັດ";
+  static String p2 = "ອໍເດີທີ່ສັ່ງຊື້";
+  // static String p3 = "ອໍເດີທີສຳເລັດ";
 
   static String p4 = "ຂໍ້ມູນສ່ວນຕົວ";
   static CartButton(BuildContext context, route) {

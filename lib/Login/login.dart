@@ -8,13 +8,15 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_care/Login/resetScreen.dart';
 import 'package:skin_care/Order/Get_order.dart';
-import 'package:skin_care/api/get_EmployeeData.dart';
+
 import 'package:skin_care/eclement/element.dart';
+import 'package:skin_care/model/Customer_Model.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
 
 
 import '../daiglog.dart';
-import '../model/Employee_Model.dart';
-import '../notifire/employeeNotifire.dart';
+
+
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -25,12 +27,12 @@ class Login extends StatefulWidget {
 
 final formKey = GlobalKey<FormState>();
 final Future<FirebaseApp> firebase = Firebase.initializeApp();
-EmployeeData employeeData = EmployeeData();
+CustomerData customerData = CustomerData();
 
 class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    EmployeeNotifire em = Provider.of<EmployeeNotifire>(context);
+    CustomerNotifire cm = Provider.of<CustomerNotifire>(context);
     return FutureBuilder(
       future: firebase,
       builder: (context, snapshot) {
@@ -78,7 +80,7 @@ class _Login extends State<Login> {
                           ),
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (String? email) {
-                            employeeData.email = email;
+                          customerData.email = email;
                           },
                           validator: MultiValidator(
                             [
@@ -104,7 +106,7 @@ class _Login extends State<Login> {
                           keyboardType: TextInputType.text,
                           obscureText: true,
                           onSaved: (String? password) {
-                            employeeData.password = password;
+                            customerData.password = password;
                           },
                           validator: (String? password) {
                             if (password!.isEmpty) {
@@ -132,16 +134,16 @@ class _Login extends State<Login> {
                                 try {
                                   FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
-                                    email: employeeData.email!,
-                                    password: employeeData.password!,
+                                    email: customerData.email!,
+                                    password: customerData.password!,
                                   )
-                                      .then((value) async {
-                                    await GetEmployeeData_only(
-                                        em, employeeData.email!, context);
+                                      .then((value) {
+                                   
+                                       
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return Get_Order();
-                                    }));
+                                       }) );
                                   });
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code != true) {

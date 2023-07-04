@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_care/eclement/element.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
 import 'package:skin_care/route/router.dart';
 
 import '../api/GetProduct.dart';
@@ -12,7 +13,7 @@ import '../api/widget/widgetShearch.dart';
 import '../notifire/Cartnotififire.dart';
 import '../notifire/categoryNotifire.dart';
 
-import '../notifire/employeeNotifire.dart';
+// import '../notifire/employeeNotifire.dart';
 import '../notifire/productNotifire.dart';
 
 class Get_Order extends StatefulWidget {
@@ -53,8 +54,8 @@ class _Get_OrderState extends State<Get_Order> {
     ProductNotifire product = Provider.of<ProductNotifire>(context);
     CategoryNotifire category = Provider.of<CategoryNotifire>(context);
     Cartnotifire cartno = Provider.of<Cartnotifire>(context);
-    EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
-
+   
+  CustomerNotifire ctm = Provider.of<CustomerNotifire>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: element.pink,
@@ -79,7 +80,7 @@ class _Get_OrderState extends State<Get_Order> {
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color(0xff179F84),
+                color: Color.fromARGB(255, 159, 23, 134),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -92,19 +93,18 @@ class _Get_OrderState extends State<Get_Order> {
                   const SizedBox(
                     height: 10,
                   ),
-
-                  // Text('${emp.CurrentEmployee_loco!.id}',
-                  //     style:const TextStyle(
+                  // Text('${emp.CurrentEmployee_loco?.id}',
+                  //     style: const TextStyle(
                   //         fontWeight: FontWeight.bold,
                   //         fontSize: 14,
                   //         color: Colors.white)),
-                  // Text('${emp.CurrentEmployee_loco!.name}',
-                  //     style:const TextStyle(
+                  // Text('${emp.CurrentEmployee_loco?.name}',
+                  //     style: const TextStyle(
                   //         fontWeight: FontWeight.bold,
                   //         fontSize: 17,
                   //         color: Colors.white)),
-                  // Text('${emp.CurrentEmployee_loco!.email}',
-                  //     style:const TextStyle(
+                  // Text('${emp.CurrentEmployee_loco?.email}',
+                  //     style: const TextStyle(
                   //         fontWeight: FontWeight.bold,
                   //         fontSize: 17,
                   //         color: Colors.white)),
@@ -113,7 +113,7 @@ class _Get_OrderState extends State<Get_Order> {
             ),
             buildListTile(element.p1, route.Get_oerder),
             buildListTile(element.p2, route.managerOrder),
-            buildListTile(element.p3, route.Report_Order_Month),
+            // buildListTile(element.p3, route.Report_Order_Month),
             buildListTile(element.p4, route.Profile),
           ],
         ),
@@ -151,14 +151,14 @@ class _Get_OrderState extends State<Get_Order> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         decoration: BoxDecoration(
-            color: colortype == true ? element.pink : Colors.blue,
+            color: colortype == true ? element.pink : Colors.purpleAccent,
             borderRadius: BorderRadius.circular(15)),
         child: Row(
           children: [
             InkWell(
               child: Text(
                 'ສີນຄ້າທັ້ງໝົດ',
-                style: TextStyle(color: element.wht),
+                style: TextStyle(color: element.wht,),
               ),
               onTap: () {
                 GetProduct(product);

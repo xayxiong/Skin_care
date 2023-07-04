@@ -32,7 +32,8 @@ class Order_Model_upload {
   String? nameCutommer;
   String? tel;
   String? address;
-  String? Employee_ID;
+  // String? Employee_ID;
+  // String? Customer_ID;
   int? amouttotal;
   int? sumtotal;
   String? Staustus;
@@ -43,7 +44,7 @@ class Order_Model_upload {
 
   Order_Model_upload.formMap(Map<String, dynamic> v) {
     id = v['id'];
-    Employee_ID = v['Employee_ID'];
+    // Customer_ID = v['Employee_ID'];
     amouttotal = v['amouttotal'];
     Ditell = v['Ditell'];
     Staustus = v['Staustus'];
@@ -56,7 +57,7 @@ class Order_Model_upload {
 
   Map<String, dynamic> toMap() => {
         'id': id,
-        'Employee_ID': Employee_ID,
+        // 'Employee_ID': Customer_ID,
         'nameCutommer': nameCutommer,
         'tel': tel,
         'address': address,

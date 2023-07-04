@@ -6,12 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:skin_care/Order/repor_Order_Day.dart';
 import 'package:skin_care/eclement/element.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
 
 
 import '../api/get_Report_Order.dart';
 import '../notifire/Repport_Order_Notifire.dart';
 
-import '../notifire/employeeNotifire.dart';
+
 
 
 class Report_Order_Month extends StatefulWidget {
@@ -27,9 +28,9 @@ class _Report_Order_MonthState extends State<Report_Order_Month> {
     super.initState();
     report_incomeNotifire order =
         Provider.of<report_incomeNotifire>(context, listen: false);
-    EmployeeNotifire emp =
-        Provider.of<EmployeeNotifire>(context, listen: false);
-    Get_reportl_Order_Month(order, emp);
+    CustomerNotifire ctm =
+        Provider.of<CustomerNotifire>(context, listen: false);
+    Get_reportl_Order_Month(order, ctm);
   }
 
   @override
@@ -135,8 +136,8 @@ class _Report_Order_MonthState extends State<Report_Order_Month> {
                 ),
                 onTap: () {
                   order.curren_Orderreport = order.Order_Month[index];
-                  EmployeeNotifire ctm =
-                      Provider.of<EmployeeNotifire>(context, listen: false);
+                  CustomerNotifire ctm =
+                      Provider.of<CustomerNotifire>(context, listen: false);
                   Get_reportl_Day(order, ctm);
                   Navigator.pushReplacement(
                       context,

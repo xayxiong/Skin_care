@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_care/eclement/element.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
 
 import '../api/GetProduct.dart';
 import '../api/Upload_Data/Upload_Order.dart';
@@ -12,7 +13,7 @@ import '../daiglog.dart';
 import '../notifire/Cartnotififire.dart';
 import '../notifire/categoryNotifire.dart';
 
-import '../notifire/employeeNotifire.dart';
+// import '../notifire/employeeNotifire.dart';
 import '../notifire/productNotifire.dart';
 
 class Cart extends StatefulWidget {
@@ -39,7 +40,9 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     Cartnotifire cart = Provider.of<Cartnotifire>(context);
     ProductNotifire product = Provider.of<ProductNotifire>(context);
-    EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
+    // EmployeeNotifire emp = Provider.of<EmployeeNotifire>(context);
+    CustomerNotifire ctm = Provider.of<CustomerNotifire>(context);
+
     return Scaffold(
       body: Column(
         children: [
@@ -200,7 +203,7 @@ class _CartState extends State<Cart> {
                   padding: const EdgeInsets.symmetric(vertical: 14)),
               onPressed: () async {
                 Dialog_Cire(context);
-                await Upload_Order(cart, product, emp);
+                await Upload_Order(cart, product, ctm);
                 Navigator.pop(context);
                 Fluttertoast.showToast(
                   msg: "ສັ່ງຊື້ສຳເລັດ",
@@ -243,7 +246,7 @@ class _CartState extends State<Cart> {
                     key: _key_import,
                     child: SizedBox(
                       width: 400,
-                      height: 420,
+                      height: 435,
                       child: Card(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,9 +362,10 @@ class _CartState extends State<Cart> {
                                       fontSize: 20),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                    primary: element.main),
+                                    primary: element.pink),
                                 onPressed: () async {
                                   Navigator.pop(context);
+
                                   _Dialog(cart);
                                   if (_key_import.currentState!.validate()) {
                                     _key_import.currentState!.save();

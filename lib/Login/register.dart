@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +8,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 import 'package:skin_care/Login/login.dart';
-import 'package:skin_care/api/get_EmployeeData.dart';
-import 'package:skin_care/model/Employee_Model.dart';
+
+import 'package:skin_care/model/Customer_Model.dart';
+
+import 'package:skin_care/notifire/customerNotifire.dart';
 
 import '../daiglog.dart';
-
-import '../notifire/employeeNotifire.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -21,11 +24,15 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final formKey = GlobalKey<FormState>();
+   String? name, email, password,tel,address;
+  bool set = false;
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
-  EmployeeData employeeData = EmployeeData();
+  // EmployeeData employeeData = EmployeeData();
+  // CustomerData customerData = CustomerData();
+   
   @override
   Widget build(BuildContext context) {
-    EmployeeNotifire em = Provider.of<EmployeeNotifire>(context);
+    // CustomerNotifire cm = Provider.of<CustomerNotifire>(context);
     return FutureBuilder(
       future: firebase,
       builder: (context, snapshot) {
@@ -71,15 +78,17 @@ class _RegisterState extends State<Register> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          onSaved: (String? fullname) {
-                            fullname = fullname;
-                          },
-                          validator: MultiValidator(
-                            [
-                              RequiredValidator(
-                                  errorText: "ກະລຸນາຊື່ ແລະ ນາມສະກຸນ"),
-                            ],
-                          ),
+                             onChanged: (value) => name = value.trim(),
+              validator: (String? name) {
+                if (name!.isEmpty) {
+                  return "ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນ";
+                } else if (name.length < 3) {
+                  return "ຊື່ ແລະ ນາມສະກຸນມັນສັ້ນເກີນໄປ";
+                }
+                name = name.toString();
+                return null;}
+                         
+                          
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -95,15 +104,12 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                           keyboardType: TextInputType.emailAddress,
-                          onSaved: (String? email) {
-                            employeeData.email = email;
-                          },
-                          validator: MultiValidator(
-                            [
-                              RequiredValidator(errorText: "ກະລຸນາປ້ອນອີເມວ"),
-                              EmailValidator(errorText: "ຮູບແບບອີເມວບໍ່ຖືກຕ້ອງ")
-                            ],
-                          ),
+                     onChanged: (value) => email = value.trim(),
+            validator: MultiValidator(
+              [
+                RequiredValidator(errorText: "ກະລຸນາປ້ອນອີເມວ"),
+                EmailValidator(errorText: "ຮູບແບບອີເມວບໍ່ຖືກຕ້ອງ"),
+              ],),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -120,17 +126,15 @@ class _RegisterState extends State<Register> {
                           ),
                           keyboardType: TextInputType.text,
                           obscureText: true,
-                          onSaved: (String? password) {
-                            employeeData.password = password;
-                          },
-                          validator: (String? password) {
-                            if (password!.isEmpty) {
-                              return "ກະລຸນາປ້ອນລະຫັດຜ່ານ";
-                            } else if (password.length < 6) {
-                              return "ລະຫັດຜ່ານມັນສັ້ນເກີນໄປ";
-                            }
-                            return null;
-                          },
+                         onChanged: (value) => password = value.trim(),
+            validator: (String? password) {
+              if (password!.isEmpty) {
+                return "ກະລຸນາປ້ອນລະຫັດຜ່ານ";
+              } else if (password.length < 6) {
+                return "ລະຫັດຜ່ານມັນສັ້ນເກີນໄປ";
+              }
+              return null;
+            },
                         ),
                         const SizedBox(
                           height: 40,
@@ -152,15 +156,42 @@ class _RegisterState extends State<Register> {
                                 try {
                                   await FirebaseAuth.instance
                                       .createUserWithEmailAndPassword(
-                                          email: employeeData.email!,
-                                          password: employeeData.password!)
+                                          email: email!,
+                                          password: password!)
                                       .then((value) async {
-                                    await GetEmployeeData_only(
-                                        em, employeeData.email!, context);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Login()));
+                                    Fluttertoast.showToast(
+                                      msg: "ລົງທະບຽນໄດ້ແລ້ວ",
+                                      fontSize: 20,
+                                      gravity: ToastGravity.CENTER,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black,
+                                    );
+                                    String uid = value.user!.uid;
+                                    print("uid = $uid");
+                                    int id = await Random().nextInt(90) + 1000;
+                                    CustomerData customerData = CustomerData(
+                                      id:id.toString(),
+                                      name: name,
+                                      email: email,
+                                      password: password,tel: tel,address: address
+                                    );
+                                    final Map<String, dynamic>? data =
+                                        customerData.toMap();
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => Login()));
+
+                                    await FirebaseFirestore.instance
+                                        .collection("customers")
+                                        .doc(id.toString())
+                                        .set(data!)
+                                        .then((value) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()));
+                                    });
                                   });
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code != true) {
@@ -195,6 +226,8 @@ class _RegisterState extends State<Register> {
                           children: [
                             TextButton(
                                 onPressed: () {
+                                  // print("$name,$email,$password");
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

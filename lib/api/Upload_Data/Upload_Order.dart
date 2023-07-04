@@ -5,13 +5,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skin_care/model/Order_Model.dart';
 import 'package:skin_care/notifire/Cartnotififire.dart';
-import 'package:skin_care/notifire/employeeNotifire.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
+
 import 'package:skin_care/notifire/productNotifire.dart';
 
 import '../GetProduct.dart';
 
 Upload_Order(
-    Cartnotifire cart, ProductNotifire product, EmployeeNotifire emp) async {
+    Cartnotifire cart, ProductNotifire product, CustomerNotifire ctm) async {
   Order_Model_upload Order = Order_Model_upload();
   cart.Carts.forEach((element) async {
     CartModel f =
@@ -27,7 +28,7 @@ Upload_Order(
   Order.nameCutommer = await cart.nameCutomer;
   Order.tel = await cart.tel;
 
-  Order.Employee_ID = await emp.CurrentEmployee_loco!.id;
+  // Order.Customer_ID = await ctm.CurrentCustomer_loco!.id;
   Order.address = await cart.address;
   Order.sumtotal = await cart.sumltoal;
   Order.amouttotal = await cart.amoultoal;

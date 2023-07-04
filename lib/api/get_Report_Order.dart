@@ -1,12 +1,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:skin_care/model/Report_Order_Model.dart';
-import 'package:skin_care/notifire/employeeNotifire.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
+
 
 
 import '../notifire/Repport_Order_Notifire.dart';
 
-Get_reportl_Order_Month(report_incomeNotifire Order,EmployeeNotifire emp) async {
+Get_reportl_Order_Month(report_incomeNotifire Order,CustomerNotifire ctm) async {
   List<Report_Order> m1 = [];
   List<num> sumtotal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   List<num> amountotal = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -35,7 +36,7 @@ Get_reportl_Order_Month(report_incomeNotifire Order,EmployeeNotifire emp) async 
 
     String m = g.toDate().toString().substring(6, 7);
     print(m+' ເດືອນ');
-    if (emp.CurrentEmployee_loco!.id == element['Employee_ID']&&element['Staustus'] == 'ສຳເລັດ') {
+    if (ctm.CurrentCustomer_loco?.id == element['Customer_ID']&&element['Staustus'] == 'ສຳເລັດ') {
       print(element.data());
     await  Report_Month(m: m, Month: Month, sumtotal: sumtotal, g: g, element: element,amountotal: amountotal);
     }
@@ -128,7 +129,7 @@ Report_Month({required String? m,required List<Timestamp>?Month,required List<nu
   ;
 }
 
-Get_reportl_Day(report_incomeNotifire Order ,EmployeeNotifire emp) async {
+Get_reportl_Day(report_incomeNotifire Order ,CustomerNotifire ctm) async {
   List<Report_Order> m1 = [];
   List<num> amountotal = [
     0,
@@ -247,7 +248,7 @@ Get_reportl_Day(report_incomeNotifire Order ,EmployeeNotifire emp) async {
     print('${g.toDate()}');
     String m = g.toDate().toString().substring(8, 10);
 
-    if (emp.CurrentEmployee_loco!.id == element['Employee_ID'] && element['Staustus'] == 'ສຳເລັດ') {
+    if (ctm.CurrentCustomer_loco!.id == element['Customer_ID'] && element['Staustus'] == 'ສຳເລັດ') {
       print('${m}');
     await Report_Day(m: m, Day: Day, sumtotal: sumtotal, g: g, element: element,amountotal: amountotal);
     }

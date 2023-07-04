@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skin_care/notifire/customerNotifire.dart';
 import 'package:skin_care/profile/Profire.dart';
 import 'package:skin_care/route/router.dart';
 import 'package:skin_care/splashScreen.dart';
@@ -17,7 +18,7 @@ import 'notifire/OrderNotifire.dart';
 import 'notifire/Repport_Order_Notifire.dart';
 import 'notifire/categoryNotifire.dart';
 
-import 'notifire/employeeNotifire.dart';
+
 import 'notifire/productNotifire.dart';
 
 
@@ -32,8 +33,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CategoryNotifire()),
       ChangeNotifierProvider(create: (_) => ProductNotifire()),
       ChangeNotifierProvider(create: (_) => Cartnotifire()),
-      ChangeNotifierProvider(create: (_) => EmployeeNotifire()),
-      // ChangeNotifierProvider(create: (_) => CustomerNotifire()),
+   
+      ChangeNotifierProvider(create: (_) => CustomerNotifire()),
       ChangeNotifierProvider(create: (_) => Order_Notifire()),
       ChangeNotifierProvider(create: (_) =>  report_incomeNotifire()),
     ],
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         route.Cart: (BuildContext context) => const Cart(),
         route.Profile: (BuildContext context) => const Profile(),
         route.managerOrder: (BuildContext context) => const ManagerOrderByCustomer(),
-        route.Report_Order_Month: (BuildContext context) => const Report_Order_Month(),
+        // route.Report_Order_Month: (BuildContext context) => const Report_Order_Month(),
       },
     );
   }
