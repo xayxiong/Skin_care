@@ -8,7 +8,6 @@ import 'package:skin_care/profile/Profire.dart';
 import 'package:skin_care/route/router.dart';
 import 'package:skin_care/splashScreen.dart';
 
-
 import 'Order/Cart.dart';
 import 'Order/Get_order.dart';
 import 'Order/Report_Order_Month.dart';
@@ -18,10 +17,7 @@ import 'notifire/OrderNotifire.dart';
 import 'notifire/Repport_Order_Notifire.dart';
 import 'notifire/categoryNotifire.dart';
 
-
 import 'notifire/productNotifire.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,10 +29,9 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CategoryNotifire()),
       ChangeNotifierProvider(create: (_) => ProductNotifire()),
       ChangeNotifierProvider(create: (_) => Cartnotifire()),
-   
       ChangeNotifierProvider(create: (_) => CustomerNotifire()),
       ChangeNotifierProvider(create: (_) => Order_Notifire()),
-      ChangeNotifierProvider(create: (_) =>  report_incomeNotifire()),
+      ChangeNotifierProvider(create: (_) => report_incomeNotifire()),
     ],
     child: const MyApp(),
   ));
